@@ -57,6 +57,7 @@ if (cluster.isPrimary) {
 
     io.on('connection', async (socket) => {
         console.log('a user connected');
+        io.emit('chat message', "User connected");
         socket.on('chat message', async (msg, clientOffset, callback) => {
             let result;
             try {
@@ -87,6 +88,10 @@ if (cluster.isPrimary) {
           // something went wrong
         }
       }
+        socket.on('disconnect', () => {
+            console.log("user disconnected")
+            io.emit('chat message', "User disconnected");
+        });
     });
 
     server.listen(port, () => {
