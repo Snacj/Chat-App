@@ -87,6 +87,10 @@ if (cluster.isPrimary) {
           // something went wrong
         }
       }
+        socket.on('disconnect', () => {
+            console.log("user disconnected")
+            io.emit('chat message', "User disconnected");
+        });
     });
 
     server.listen(port, () => {
